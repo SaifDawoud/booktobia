@@ -1,4 +1,4 @@
-
+import 'package:booktobia/Features/Splash/presentation/views/widgets/fading_logo.dart';
 import 'package:booktobia/core/utils/app_router.dart';
 import 'package:booktobia/core/utils/assets.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,12 +18,16 @@ class _SplashViewbodyState extends State<SplashViewbody>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<Offset> slidingAnimation;
+  late Animation<double> fadingAnimation;
 
   @override
   void initState() {
     super.initState();
     initSlidingAnimation();
-
+    fadingAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(animationController);
     navigateToHome();
   }
 
@@ -40,7 +44,9 @@ class _SplashViewbodyState extends State<SplashViewbody>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Image.asset(AssetsData.logo,height:200 ,width: 100,),
+        FadingLogo(
+          fadingAnimation: fadingAnimation,
+        ),
         const SizedBox(
           height: 4,
         ),
@@ -52,7 +58,7 @@ class _SplashViewbodyState extends State<SplashViewbody>
   void initSlidingAnimation() {
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 2),
     );
 
     slidingAnimation =
